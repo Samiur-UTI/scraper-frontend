@@ -1,20 +1,37 @@
-import React from 'react'
-import { Box, InputLabel, MenuItem, Select, TextField, Button, FormControl } from '@mui/material';
+import React,{useEffect,useState} from 'react'
+import { MenuItem, TextField, Button } from '@mui/material';
 import { useFormik } from 'formik';
+import axios from 'axios';
 import './index.css';
 export default function Form() {
+    const [data,setData] = useState({
+        facility: '',
+        name: '',
+        address: '',
+        city: '',
+        county: '',
+        phone: ''
+    })
+    async function fetchData(){
+        const response = await axios.get('localhost:8000/');
+        console.log(response);
+        return response;
+    }
+    useEffect(() => {
+        fetchData();
+    },[])
     const formik = useFormik({
-        initialValues: {
-
-        },
+        enableReinitialize: true,
+        initialValues: data ,
         onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+            console.log(JSON.stringify(values, null, 2));
         },
     });
     return (
         <div className='form-container'>
             <form onSubmit={formik.handleSubmit}>
                 <TextField
+                    margin='normal'
                     fullWidth
                     variant="outlined"
                     name="facility"
@@ -39,6 +56,7 @@ export default function Form() {
                 </TextField>
                 <TextField
                     fullWidth
+                    margin='normal'
                     name="name"
                     label="Name"
                     value={formik.values.name}
@@ -48,6 +66,7 @@ export default function Form() {
                 />
                 <TextField
                     fullWidth
+                    margin='normal'
                     name="address"
                     label="Street Address"
                     type="text"
@@ -58,6 +77,7 @@ export default function Form() {
                 />
                 <TextField
                     fullWidth
+                    margin='normal'
                     name="city"
                     label="City"
                     type="text"
@@ -68,6 +88,7 @@ export default function Form() {
                 />
                 <TextField
                     fullWidth
+                    margin='normal'
                     variant="outlined"
                     name="county"
                     label="County"
@@ -91,6 +112,7 @@ export default function Form() {
                 </TextField>
                 <TextField
                     fullWidth
+                    margin='normal'
                     name="phone"
                     label="Phone Number"
                     type="number"
