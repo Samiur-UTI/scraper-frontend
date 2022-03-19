@@ -1,5 +1,6 @@
+/* eslint-disable no-template-curly-in-string */
 import React from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate, Outlet, Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,6 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 export default function ResultTable() {
   const {state} = useLocation()
+  const navigate = useNavigate()
+  console.log("Table State",state)
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -25,12 +28,12 @@ export default function ResultTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {state.message.map((row) => (
+          {state.data.map((row) => (
             <TableRow
               key={row.property_type_id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="right">{row.property_name}</TableCell>
+              <TableCell align="right" onClick={() => { navigate(`/${row.property_name}`,{state:row}) }}>{row.property_name}</TableCell>
               <TableCell align="right">{row.city}</TableCell>
               <TableCell align="right">{row.state}</TableCell>
               <TableCell align="right">{row.zip}</TableCell>
