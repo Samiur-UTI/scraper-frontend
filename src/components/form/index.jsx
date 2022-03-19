@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from 'react'
 import { MenuItem, TextField, Button } from '@mui/material';
 import { useFormik } from 'formik';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './index.css';
 export default function Form() {
     const [property, setProperty] = useState('')
     const [county, setCounty] = useState('')
+    let navigate = useNavigate();
     async function fetchData() {
         const response = await axios.get('http://localhost:8000');
         return response.data;
@@ -43,6 +45,10 @@ export default function Form() {
             console.log(values);
             const response = await axios.post('http://localhost:8000/search', values);
             console.log(response.data);
+            if(response.data.success) {
+                navigate('/search',{state: response.data});
+            }
+            else alert('Something went wrong, search again');
         },
     });
     if (property.length > 0 && county.length > 0) {
