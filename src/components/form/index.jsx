@@ -14,9 +14,19 @@ export default function Form() {
     useEffect(() => {
         const data = fetchData();
         data.then(res => {
-            const { property, county } = res.data;
-            setProperty(property);
-            setCounty(county);
+            if(res.success) {
+                const { property, county } = res.data;
+                // console.log(
+                //     property,
+                //     county
+                // )
+                setProperty(property);
+                setCounty(county);
+            }else{
+                console.log(res)
+            }
+        }).catch(err => {
+            console.log(err);
         })
     }, [])
     const formik = useFormik({
@@ -27,10 +37,12 @@ export default function Form() {
             address: '',
             city: '',
             county: county,
-            phone: ''
+            zip: ''
         },
-        onSubmit: (values) => {
-            console.log(JSON.stringify(values, null, 2));
+        onSubmit: async (values) => {
+            console.log(values);
+            const response = await axios.post('http://localhost:8000/search', values);
+            console.log(response.data);
         },
     });
     if (property.length > 0 && county.length > 0) {
@@ -46,6 +58,7 @@ export default function Form() {
                         select
                         value={formik.values.facility}
                         onChange={formik.handleChange}
+                        required
                         error={
                             formik.touched.governorates &&
                             Boolean(formik.errors.governorates)
@@ -95,6 +108,7 @@ export default function Form() {
                         margin='normal'
                         variant="outlined"
                         name="county"
+                        required
                         label="County"
                         select
                         value={formik.values.county}
@@ -114,15 +128,15 @@ export default function Form() {
                     <TextField
                         fullWidth
                         margin='normal'
-                        name="phone"
-                        label="Phone Number"
+                        name="zip"
+                        label="Zip Code"
                         type="number"
                         value={formik.values.phone}
                         onChange={formik.handleChange}
                         error={formik.touched.password && Boolean(formik.errors.password)}
                         helperText={formik.touched.password && formik.errors.password}
                     />
-                    <Button color="primary" variant="contained" fullWidth type="submit">
+                    <Button color="primary" variant="contained" type="submit">
                         Submit
                     </Button>
                 </form>
@@ -212,15 +226,15 @@ export default function Form() {
                 <TextField
                     fullWidth
                     margin='normal'
-                    name="phone"
-                    label="Phone Number"
+                    name="zip"
+                    label="Zip Code"
                     type="number"
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
                 />
-                <Button color="primary" variant="contained" fullWidth type="submit">
+                <Button color="primary" variant="contained" type="submit">
                     Submit
                 </Button>
             </form>
