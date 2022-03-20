@@ -40,9 +40,9 @@ export default function Form() {
             county: county,
         },
         onSubmit: async (values) => {
-            console.log(values);
+            // console.log(values);
             const response = await axios.post('http://localhost:8000/search', values);
-            console.log(response.data);
+            // console.log(response.data);
             if(response.data.success) {
                 navigate('/search',{state: response.data});
             }

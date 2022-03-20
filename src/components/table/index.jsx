@@ -12,7 +12,7 @@ import Link from '@mui/material/Link';
 export default function ResultTable() {
   const {state} = useLocation()
   const navigate = useNavigate()
-  console.log("Table State",state)
+  // console.log("Table State",state)
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
