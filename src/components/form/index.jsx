@@ -36,10 +36,8 @@ export default function Form() {
         initialValues: {
             facility: property,
             name: '',
-            address: '',
             city: '',
             county: county,
-            zip: ''
         },
         onSubmit: async (values) => {
             console.log(values);
@@ -62,6 +60,7 @@ export default function Form() {
                         name="facility"
                         label="Facility"
                         select
+                        defaultValue=''
                         value={formik.values.facility}
                         onChange={formik.handleChange}
                         required
@@ -86,17 +85,6 @@ export default function Form() {
                         onChange={formik.handleChange}
                         error={formik.touched.email && Boolean(formik.errors.email)}
                         helperText={formik.touched.email && formik.errors.email}
-                    />
-                    <TextField
-                        fullWidth
-                        margin='normal'
-                        name="address"
-                        label="Street Address"
-                        type="text"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
                     />
                     <TextField
                         fullWidth
@@ -131,17 +119,6 @@ export default function Form() {
                             <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
                         ))}
                     </TextField>
-                    <TextField
-                        fullWidth
-                        margin='normal'
-                        name="zip"
-                        label="Zip Code"
-                        type="number"
-                        value={formik.values.phone}
-                        onChange={formik.handleChange}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
-                    />
                     <Button color="primary" variant="contained" type="submit">
                         Submit
                     </Button>
@@ -186,17 +163,6 @@ export default function Form() {
                 <TextField
                     fullWidth
                     margin='normal'
-                    name="address"
-                    label="Street Address"
-                    type="text"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    error={formik.touched.password && Boolean(formik.errors.password)}
-                    helperText={formik.touched.password && formik.errors.password}
-                />
-                <TextField
-                    fullWidth
-                    margin='normal'
                     name="city"
                     label="City"
                     type="text"
@@ -223,23 +189,9 @@ export default function Form() {
                     }
                 >
                     <MenuItem key={""} value={""}>
-                        No Selected // Or Empty
-                    </MenuItem>
-                    <MenuItem value='vuda'>
-                        Option 1
+                        Empty
                     </MenuItem>
                 </TextField>
-                <TextField
-                    fullWidth
-                    margin='normal'
-                    name="zip"
-                    label="Zip Code"
-                    type="number"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    error={formik.touched.password && Boolean(formik.errors.password)}
-                    helperText={formik.touched.password && formik.errors.password}
-                />
                 <Button color="primary" variant="contained" type="submit">
                     Submit
                 </Button>
